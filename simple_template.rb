@@ -1,26 +1,50 @@
 remove_file "README.rdoc"
 create_file "README.md", "TODO"
 
+gem 'rspec-rails', group: [:test, :development]
+
+append_file 'Gemfile', <<-GEMFILE
+
 # test
 
 # markup & styling
-append_file 'Gemfile', "gem 'slim'"
-append_file 'Gemfile', "gem 'neat'"
+group :development do
+  gem 'slim'
+  gem 'neat'
+end
 
 # debug
-append_file 'Gemfile', "gem 'pry'"
-append_file 'Gemfile', "gem 'xray'"
+gem 'pry'
+gem 'xray'
 
 
 # users
-append_file 'Gemfile', "gem 'devise'"
+# gem 'devise'
 
 
-# git init
+GEMFILE
 
-if yes? "Do you want to generate a root controller?"
+run 'bundle install'
+generate 'rspec:install'
+
+if yes? "Do you want to add users with Devise?"
   name = ask("What should it be called?").underscore
-  generate :controller, "#{name} index"
-  route "root to: '#{name}\#index'"
 end
 
+git :init
+git add: '.', commit: "-m 'initial commit'"
+
+
+
+# ask about devise
+# Test gems from everday rails - grouped properly
+
+# gem 'awesome_print', :require => 'ap'
+#   gem 'quiet_assets'
+#   gem 'better_errors'
+#   gem 'binding_of_caller'
+
+# group :production do
+#    gem 'pg'
+#    gem 'rails_12factor'
+# end
