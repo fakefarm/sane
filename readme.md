@@ -15,5 +15,8 @@ Place the flag into your .railsrc file if you want these to be default
     # ~/.railsrc
     -m https://github.com/woodall/sane/blob/master/sane_template.rb
 
+## TODO
+- swap application layout for slim
+
 ## Kudos
 Thanks, Ryan for the [Railscast](http://railscasts.com/episodes/148-app-templates-in-rails-2-3)!
