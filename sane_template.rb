@@ -1,41 +1,12 @@
 # ========================================================================
-# App Setup
+# Misc
 # ========================================================================
 
 empty_directory 'app/services'
 
 
 # ========================================================================
-# Readme stuff
-# ========================================================================
-
-remove_file "README.rdoc"
-create_file "README.md", <<-README
-## A New project by [Dave Woodall](http://www.hireDave.me)
-Readme is coming soon.
-- [@hireDave](http://www.twitter.com/hireDave)
-
-### DEVISE TODO's
-
-1. In production, :host should be set to the actual host of your application.
-
-    config.action_mailer.default_url_options = { :host => 'localhost:3000' }
-
-2. Ensure you have defined root_url to *something* in your config/routes.rb.
-For example:
-
-    root :to => "home#index"
-
-3. Ensure you have flash messages in app/views/layouts/application.html.erb.
-For example:
-
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-README
-
-
-# ========================================================================
-## Smacss Setup
+## SMACSS
 # ========================================================================
 
 empty_directory 'app/assets/stylesheets/base'
@@ -53,31 +24,33 @@ create_file 'app/assets/stylesheets/settings/_typography.scss'
 remove_file "app/assets/stylesheets/application.css"
 create_file "app/assets/stylesheets/application.scss", <<-INCLUDES
 
-# Libraries
+// Libraries
 @import 'bourbon';
 @import 'neat';
 
-# Settings
+// Settings
 @import 'settings/typography';
 @import 'settings/colors';
 
-# Base
+// Base
 @import 'base/base';
 @import 'base/typography';
 
-# Layout
+// Layout
 @import 'layout/layouts';
 
 INCLUDES
 
 
 # ========================================================================
-# DEVISE
+# Devise
 # ========================================================================
 
 if yes? "Do you want to add users with Devise?"
   inject_into_file 'Gemfile', after: "gem 'rails', '4.0.0'" do
-    "gem 'devise'"
+    <<-GEM
+gem 'devise'
+    GEM
   end
 
   inject_into_file 'config/environments/development.rb', after: "config.cache_classes = false" do
@@ -87,6 +60,7 @@ if yes? "Do you want to add users with Devise?"
     CONFIG
   end
 end
+
 
 # ========================================================================
 # Gemfile
@@ -147,13 +121,19 @@ generate 'rspec:install'
 generate 'devise:install'
 generate 'devise User'
 generate 'devise:views'
+
+
+# ========================================================================
+# Database
+# ========================================================================
+
 run 'rake db:create:all'
 run 'rake db:migrate'
 run 'rake db:test:clone'
 
 
 # ========================================================================
-# Generator overrides
+# Generator Overrides
 # ========================================================================
 
 inject_into_file 'config/application.rb', after: "class Application < Rails::Application" do
@@ -175,6 +155,35 @@ inject_into_file 'config/application.rb', after: "class Application < Rails::App
     end
   CONFIG
 end
+
+
+# ========================================================================
+# Readme
+# ========================================================================
+
+remove_file "README.rdoc"
+create_file "README.md", <<-README
+## A New project by [Dave Woodall](http://www.hireDave.me)
+Readme is coming soon.
+- [@hireDave](http://www.twitter.com/hireDave)
+
+### DEVISE TODO's
+
+1. In production, :host should be set to the actual host of your application.
+
+    config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+
+2. Ensure you have defined root_url to *something* in your config/routes.rb.
+For example:
+
+    root :to => "home#index"
+
+3. Ensure you have flash messages in app/views/layouts/application.html.erb.
+For example:
+
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+README
 
 
 # ========================================================================
