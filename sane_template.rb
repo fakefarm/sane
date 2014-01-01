@@ -24,9 +24,8 @@ create_file 'app/assets/stylesheets/settings/_typography.scss'
 remove_file "app/assets/stylesheets/application.css"
 create_file "app/assets/stylesheets/application.scss", <<-INCLUDES
 
-// Libraries
-@import 'bourbon';
-@import 'neat';
+// Styling
+@import 'smack-down';
 
 // Settings
 @import 'settings/typography';
@@ -108,8 +107,10 @@ end
 
 gem 'slim-rails'
 gem 'neat'
+gem 'smack-down', '~> 0.0.4'
 GEMFILE
 end
+
 
 
 # ========================================================================
